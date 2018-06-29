@@ -166,6 +166,12 @@ public:
 
     // Remove an arg setting, used only in testing
     void ClearArg(const std::string &strArg);
+
+
+    // Specific arguments
+    bool IsHelpSet();
+    bool IsVersionSet();
+    std::string GetDataDir();
 };
 
 extern ArgsManager gArgs;

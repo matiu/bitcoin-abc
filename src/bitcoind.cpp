@@ -83,13 +83,12 @@ bool AppInit(int argc, char *argv[]) {
     gArgs.ParseParameters(argc, argv);
 
     // Process help and version before taking care about datadir
-    if (gArgs.IsArgSet("-?") || gArgs.IsArgSet("-h") ||
-        gArgs.IsArgSet("-help") || gArgs.IsArgSet("-version")) {
+    if (gArgs.IsHelpSet())) {
         std::string strUsage = strprintf(_("%s Daemon"), _(PACKAGE_NAME)) +
                                " " + _("version") + " " + FormatFullVersion() +
                                "\n";
 
-        if (gArgs.IsArgSet("-version")) {
+        if (gArgs.IsVersionSet()) {
             strUsage += FormatParagraph(LicenseInfo());
         } else {
             strUsage += "\n" + _("Usage:") + "\n" +
@@ -107,7 +106,7 @@ bool AppInit(int argc, char *argv[]) {
         if (!fs::is_directory(GetDataDir(false))) {
             fprintf(stderr,
                     "Error: Specified data directory \"%s\" does not exist.\n",
-                    gArgs.GetArg("-datadir", "").c_str());
+                    gArgs.GetDataDir().c_str());
             return false;
         }
         try {

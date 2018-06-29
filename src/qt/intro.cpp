@@ -165,7 +165,7 @@ bool Intro::pickDataDirectory() {
     QSettings settings;
     /* If data directory provided on command line, no need to look at settings
        or show a picking dialog */
-    if (!gArgs.GetArg("-datadir", "").empty()) return true;
+    if (!gArgs.GetDataDir().empty()) return true;
     /* 1) Default data directory for operating system */
     QString dataDir = getDefaultDataDirectory();
     /* 2) Allow QSettings to override default dir */

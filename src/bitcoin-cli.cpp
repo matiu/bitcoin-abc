@@ -40,7 +40,7 @@ std::string HelpMessageCli() {
     strUsage += HelpMessageOpt(
         "-conf=<file>", strprintf(_("Specify configuration file (default: %s)"),
                                   BITCOIN_CONF_FILENAME));
-    strUsage += HelpMessageOpt("-datadir=<dir>", _("Specify data directory"));
+    strUsage += gArgs.DataDirHelp();
     AppendParamsHelpMessages(strUsage);
     strUsage += HelpMessageOpt(
         "-named",
@@ -139,7 +139,7 @@ static int AppInitRPC(int argc, char *argv[]) {
     if (!fs::is_directory(GetDataDir(false))) {
         fprintf(stderr,
                 "Error: Specified data directory \"%s\" does not exist.\n",
-                gArgs.GetArg("-datadir", "").c_str());
+                gArgs.GetDataDir().c_str());
         return EXIT_FAILURE;
     }
     try {

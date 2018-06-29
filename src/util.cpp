@@ -265,6 +265,33 @@ void ArgsManager::ClearArg(const std::string &strArg) {
     mapArgs.erase(strArg);
 }
 
+bool ArgsManager::IsHelpSet() {
+    return IsArgSet("-?") || IsArgSet("-h") ||
+        IsArgSet("-help") || IsArgSet("-version");
+}
+
+
+bool ArgsManager::IsVersionSet() {
+    return IsArgSet("-version")
+}
+
+bool ArgsManager::IsDataDirSet() {
+  return IsArgSet("-datadir");
+}
+
+std::string ArgsManager::GetDataDir() {
+  return GetArg("-datadir", "");
+}
+
+std::string ArgsManager::DataDirHelp() {
+  return HelpMessageOpt("-datadir=<dir>", _("Specify data directory"));
+};
+
+bool ArgsManager::SoftSetDataDir(const std::string &strValue) {
+    return SoftSetArg("-datadir", strValue);
+};
+ 
+
 static const int screenWidth = 79;
 static const int optIndent = 2;
 static const int msgIndent = 7;
@@ -342,8 +369,8 @@ const fs::path &GetDataDir(bool fNetSpecific) {
     // value so we don't have to do memory allocations after that.
     if (!path.empty()) return path;
 
-    if (gArgs.IsArgSet("-datadir")) {
-        path = fs::system_complete(gArgs.GetArg("-datadir", ""));
+    if (gArgs.IsDataDirSet()) {
+        path = fs::system_complete(gArgs.GetDataDir());
         if (!fs::is_directory(path)) {
             path = "";
             return path;
